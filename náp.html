@@ -1,0 +1,1120 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Trang Sinh Nhật</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #ff6b6b;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .upload-section {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(248, 249, 250, 0.8);
+        }
+
+        .upload-section:hover {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .upload-section.dragover {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        #imageUpload {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 50%;
+            border: 4px solid #ff6b6b;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 205, 196, 0.4);
+        }
+
+        .preview-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 15px;
+            border: 2px solid #ddd;
+        }
+
+        .preview-section h3 {
+            color: #4ecdc4;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .preview-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .icon {
+            color: #ff6b6b;
+            margin-right: 8px;
+        }
+
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .back-btn {
+            flex: 1;
+            padding: 15px;
+            background: linear-gradient(45deg, #6c757d, #5a6268);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .buttons-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-birthday-cake icon"></i>Tạo Trang Sinh Nhật</h1>
+            <p>Tạo một trang sinh nhật đặc biệt với thông tin và hình ảnh của riêng bạn</p>
+        </div>
+
+        <form id="birthdayForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user icon"></i>Tên người sinh nhật:</label>
+                    <input type="text" id="name" name="name" value="Phạm Thế Sơn" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date"><i class="fas fa-calendar icon"></i>Ngày sinh (dd - mm - yyyy):</label>
+                    <input type="text" id="date" name="date" value="28 - 07 - 2003" placeholder="28 - 07 - 2003" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="title"><i class="fas fa-heading icon"></i>Tiêu đề trang:</label>
+                <input type="text" id="title" name="title" value="Happy Birthday" required>
+            </div>
+
+            <div class="form-group">
+                <label for="letterTitle"><i class="fas fa-envelope icon"></i>Tiêu đề thư:</label>
+                <input type="text" id="letterTitle" name="letterTitle" value="Gửi em" required>
+            </div>
+
+            <div class="form-group">
+                <label for="buttonText"><i class="fas fa-mouse-pointer icon"></i>Text nút bấm:</label>
+                <input type="text" id="buttonText" name="buttonText" value="Đã nghiện còn ngại:)))" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message"><i class="fas fa-comment icon"></i>Lời nhắn trong thư:</label>
+                <textarea id="message" name="message" placeholder="Viết lời chúc sinh nhật của bạn ở đây..." required>Chúc mừng sinh nhật! Chúc bạn luôn vui vẻ, hạnh phúc và thành công trong cuộc sống. Hy vọng tất cả những ước mơ của bạn sẽ trở thành hiện thực! 🎉💕</textarea>
+            </div>
+
+
+
+            <div class="form-group">
+                <label><i class="fas fa-image icon"></i>Ảnh đại diện:</label>
+                <div class="upload-section" id="uploadSection">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
+                    <p style="margin-bottom: 15px; color: #666;">Kéo thả ảnh vào đây hoặc</p>
+                    <label for="imageUpload" class="upload-btn">
+                        <i class="fas fa-plus"></i> Chọn Ảnh
+                    </label>
+                    <input type="file" id="imageUpload" accept="image/*">
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #999;">
+                        Hỗ trợ: JPG, PNG, GIF (tối đa 5MB)
+                    </p>
+                </div>
+                <div class="preview-container" id="previewContainer" style="display: none;">
+                    <img id="previewImage" class="preview-image" alt="Preview">
+                    <p style="margin-top: 10px;">
+                        <button type="button" class="upload-btn" onclick="removeImage()">
+                            <i class="fas fa-trash"></i> Xóa ảnh
+                        </button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="buttons-section">
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-rocket"></i> Tạo Link Sinh Nhật
+                </button>
+            </div>
+        </form>
+
+        <div id="result" class="result" style="display: none;">
+            <h3><i class="fas fa-check-circle" style="color: #4ecdc4;"></i> Link đã được tạo thành công!</h3>
+
+            <div class="link-container">
+                <div class="generated-link" id="generatedLink"></div>
+            </div>
+
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="btn-copy" onclick="copyLink()">
+                    <i class="fas fa-copy"></i> Sao chép link
+                </button>
+                <button class="btn-open" onclick="openWebsite()">
+                    <i class="fas fa-external-link-alt"></i> Mở website
+                </button>
+                <button class="btn-qr" onclick="generateQR()">
+                    <i class="fas fa-qrcode"></i> Tạo QR trái tim
+                </button>
+            </div>
+
+            <div class="preview-result">
+                <h4><i class="fas fa-eye"></i> Xem trước nội dung:</h4>
+                <div class="preview-result-text" id="previewResultText"></div>
+            </div>
+
+            <div id="qrSection" class="qr-section" style="display: none;">
+                <h4><i class="fas fa-heart" style="color: #ff69b4;"></i> QR Code Trái Tim:</h4>
+                <div class="qr-container">
+                    <!-- QR image will be dynamically inserted here -->
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="btn-download" onclick="downloadQR()">
+                        <i class="fas fa-download"></i> Tải QR về máy
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <style>
+            .result {
+                margin-top: 30px;
+                padding: 25px;
+                background: linear-gradient(45deg, #4ecdc4, #44a08d);
+                border-radius: 15px;
+                color: white;
+                animation: slideIn 0.6s ease-out;
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .result h3 {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+            }
+
+            .link-container {
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                word-break: break-all;
+            }
+
+            .generated-link {
+                font-family: monospace;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+            .btn-copy,
+            .btn-open {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                margin: 5px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+
+            .btn-qr {
+                background: linear-gradient(45deg, #ff69b4, #ff1493);
+                color: white;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                margin: 5px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+            }
+
+            .btn-qr:hover {
+                background: linear-gradient(45deg, #ff1493, #dc143c);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(255, 20, 147, 0.5);
+            }
+
+            .btn-download {
+                background: linear-gradient(45deg, #ff69b4, #ff1493);
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+
+            .btn-copy:hover,
+            .btn-open:hover,
+            .btn-download:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .qr-section {
+                margin-top: 20px;
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                border: 2px solid #ff69b4;
+            }
+
+            .qr-section h4 {
+                margin-bottom: 15px;
+                color: #fff;
+                text-align: center;
+            }
+
+            .qr-container {
+                display: flex;
+                justify-content: center;
+                margin: 20px 0;
+                padding: 20px;
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            #qrCanvas {
+                border-radius: 15px;
+                background: white;
+            }
+
+            .preview-result {
+                margin-top: 20px;
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+            }
+
+            .preview-result h4 {
+                margin-bottom: 15px;
+                color: #fff;
+            }
+
+            .preview-result-text {
+                background: rgba(255, 255, 255, 0.9);
+                color: #333;
+                padding: 15px;
+                border-radius: 8px;
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            @media (max-width: 768px) {
+
+                .btn-copy,
+                .btn-open,
+                .btn-qr,
+                .btn-download {
+                    display: block;
+                    width: 100%;
+                    margin: 5px 0;
+                }
+
+                #qrImage {
+                    width: 250px !important;
+                    height: 250px !important;
+                }
+
+                .qr-container {
+                    padding: 15px;
+                }
+            }
+
+            @keyframes heartPulse {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                }
+
+                50% {
+                    transform: scale(1.2);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes heartBeat {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                    filter: brightness(1);
+                }
+
+                50% {
+                    transform: scale(1.05);
+                    filter: brightness(1.1);
+                }
+            }
+
+            @keyframes floatHeart {
+
+                0%,
+                100% {
+                    transform: translate(-50%, -50%) translateY(0px) scale(1);
+                    opacity: 0.7;
+                }
+
+                25% {
+                    transform: translate(-50%, -50%) translateY(-10px) scale(1.1);
+                    opacity: 1;
+                }
+
+                75% {
+                    transform: translate(-50%, -50%) translateY(5px) scale(0.9);
+                    opacity: 0.8;
+                }
+            }
+        </style>
+    </div>
+
+    <script>
+        let selectedImage = null;
+        
+        // Update preview when inputs change
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = ['name', 'date', 'title', 'letterTitle', 'buttonText'];
+            
+            inputs.forEach(input => {
+                document.getElementById(input).addEventListener('input', function() {
+                    document.getElementById('preview' + input.charAt(0).toUpperCase() + input.slice(1)).textContent = this.value;
+                });
+            });
+            
+            // Check QR library availability
+            checkQRLibrary();
+        });
+        
+        function checkQRLibrary() {
+            if (typeof QRCode === 'undefined') {
+                console.log('QRCode library not found on page load, will load when needed');
+            } else {
+                console.log('QRCode library is available');
+            }
+        }
+
+        // Image upload handling
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadSection = document.getElementById('uploadSection');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+
+        // File input change
+        imageUpload.addEventListener('change', function(e) {
+            handleImageFile(e.target.files[0]);
+        });
+
+        // Drag and drop
+        uploadSection.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadSection.classList.add('dragover');
+        });
+
+        uploadSection.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadSection.classList.remove('dragover');
+        });
+
+        uploadSection.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadSection.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleImageFile(files[0]);
+            }
+        });
+
+        function handleImageFile(file) {
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Vui lòng chọn file ảnh hợp lệ!');
+                return;
+            }
+            
+            // Validate file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ảnh quá lớn! Vui lòng chọn ảnh nhỏ hơn 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Compress image before storing
+                compressImage(e.target.result, function(compressedImage) {
+                    selectedImage = compressedImage;
+                    previewImage.src = selectedImage;
+                    uploadSection.style.display = 'none';
+                    previewContainer.style.display = 'block';
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function compressImage(base64, callback, quality = 0.3, maxWidth = 200) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Calculate new dimensions (keep aspect ratio)
+                let { width, height } = img;
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxWidth) {
+                        width = (width * maxWidth) / height;
+                        height = maxWidth;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                // Draw and compress
+                ctx.drawImage(img, 0, 0, width, height);
+                const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                
+                console.log('Original size:', base64.length, 'Compressed size:', compressedBase64.length);
+                callback(compressedBase64);
+            };
+            img.src = base64;
+        }
+
+        function removeImage() {
+            selectedImage = null;
+            previewImage.src = '';
+            uploadSection.style.display = 'block';
+            previewContainer.style.display = 'none';
+            imageUpload.value = '';
+        }
+
+        // Form submission
+        document.getElementById('birthdayForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Create a short ID for this data set
+            const shortId = generateShortId();
+            
+            // Store all data with the short ID
+            const birthdayData = {
+                name: data.name,
+                date: data.date,
+                title: data.title,
+                letterTitle: data.letterTitle,
+                buttonText: data.buttonText,
+                message: data.message,
+                profileImage: selectedImage
+            };
+            
+            // Store in localStorage with short ID
+            localStorage.setItem(`birthday_${shortId}`, JSON.stringify(birthdayData));
+            
+            // Get current domain and generate full URL (only home.html)
+            const currentDomain = window.location.origin + window.location.pathname.replace('/create.html', '');
+            const birthdayUrl = `${currentDomain}home.html?id=${shortId}`;
+            
+            // Display result with single link
+            document.getElementById('generatedLink').innerHTML = `
+                <strong>Link trang sinh nhật:</strong><br>
+                <a href="${birthdayUrl}" target="_blank">${birthdayUrl}</a>
+            `;
+            document.getElementById('result').style.display = 'block';
+            
+            // Calculate and show link size
+            const linkSize = birthdayUrl.length;
+            const linkSizeKB = (linkSize / 1024).toFixed(1);
+            
+            // Create preview text
+            const previewHTML = `
+                <strong>Link trang sinh nhật:</strong> ${birthdayUrl} (${linkSizeKB}KB)<br>
+                <strong>ID:</strong> ${shortId}<br>
+                <strong>Tên:</strong> ${data.name}<br>
+                <strong>Ngày sinh:</strong> ${data.date}<br>
+                <strong>Tiêu đề:</strong> ${data.title}<br>
+                <strong>Tiêu đề thư:</strong> ${data.letterTitle}<br>
+                <strong>Text nút:</strong> ${data.buttonText}<br>
+                <strong>Lời nhắn:</strong> ${data.message.substring(0, 100)}${data.message.length > 100 ? '...' : ''}<br>
+                <strong>Ảnh:</strong> ${selectedImage ? 'Đã nén và tối ưu' : 'Chưa chọn ảnh'}
+            `;
+            
+            document.getElementById('previewResultText').innerHTML = previewHTML;
+            
+            // Scroll to result
+            document.getElementById('result').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        });
+
+        // Generate short ID (6 characters)
+        function generateShortId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        let generatedURL = '';
+
+        function copyLink() {
+            // Get the stored URL
+            const currentDomain = window.location.origin + window.location.pathname.replace('/create.html', '');
+            const shortId = document.getElementById('previewResultText').innerHTML.match(/ID:<\/strong> (\w+)/)[1];
+            const birthdayUrl = `${currentDomain}/home.html?id=${shortId}`;
+            
+            navigator.clipboard.writeText(birthdayUrl).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Đã sao chép link!';
+                btn.style.background = 'rgba(76, 175, 80, 0.3)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'rgba(255, 255, 255, 0.2)';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = birthdayUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Link đã được sao chép!');
+            });
+        }
+
+        function openWebsite() {
+            // Get the stored URL
+            const currentDomain = window.location.origin + window.location.pathname.replace('/create.html', '');
+            const shortId = document.getElementById('previewResultText').innerHTML.match(/ID:<\/strong> (\w+)/)[1];
+            const birthdayUrl = `${currentDomain}/home.html?id=${shortId}`;
+            
+            // Open the URL in new tab
+            window.open(birthdayUrl, '_blank');
+        }
+
+        // QR Code functions using QR Server API
+        function generateQR() {
+            // Get the stored URL
+            const currentDomain = window.location.origin + window.location.pathname.replace('/create.html', '');
+            const shortId = document.getElementById('previewResultText').innerHTML.match(/ID:<\/strong> (\w+)/)[1];
+            const birthdayUrl = `${currentDomain}/home.html?id=${shortId}`;
+            
+            console.log('Generating QR for URL:', birthdayUrl);
+            
+            // Show loading state
+            const qrBtn = document.querySelector('.btn-qr');
+            const originalText = qrBtn.innerHTML;
+            qrBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tạo...';
+            qrBtn.disabled = true;
+            
+            // Generate QR for the URL
+            generateQRWithAPI(birthdayUrl, qrBtn, originalText);
+        }
+        
+        function generateQRWithAPI(url, qrBtn, originalText) {
+            console.log('Starting QR generation with API...');
+            
+            // Encode the URL properly
+            const encodedUrl = encodeURIComponent(url);
+            
+            // Create regular QR first with high error correction
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodedUrl}&color=ff0000&bgcolor=ffffff&format=png&ecc=H&qzone=2`;
+            
+            console.log('QR API URL:', qrApiUrl);
+            
+            // Get the QR container and clear existing content
+            const qrContainer = document.querySelector('.qr-container');
+            qrContainer.innerHTML = '';
+            
+            // Create heart-shaped background container
+            const heartContainer = document.createElement('div');
+            heartContainer.style.position = 'relative';
+            heartContainer.style.display = 'inline-block';
+            heartContainer.style.width = '400px';
+            heartContainer.style.height = '400px';
+            
+            // Create heart-shaped background using CSS
+            const heartBg = document.createElement('div');
+            heartBg.style.position = 'absolute';
+            heartBg.style.top = '0';
+            heartBg.style.left = '0';
+            heartBg.style.width = '100%';
+            heartBg.style.height = '100%';
+            heartBg.style.background = '#ff0000';
+            heartBg.style.clipPath = 'path("M200,350 C200,350 25,250 25,150 C25,100 75,50 125,50 C150,50 175,62.5 200,87.5 C225,62.5 250,50 275,50 C325,50 375,100 375,150 C375,250 200,350 200,350Z")';
+            heartBg.style.zIndex = '1';
+            
+            // Create QR image
+            const qrImg = document.createElement('img');
+            qrImg.id = 'qrImage';
+            qrImg.style.position = 'absolute';
+            qrImg.style.top = '50%';
+            qrImg.style.left = '50%';
+            qrImg.style.transform = 'translate(-50%, -50%)';
+            qrImg.style.width = '280px';
+            qrImg.style.height = '280px';
+            qrImg.style.zIndex = '2';
+            qrImg.style.background = 'white';
+            qrImg.style.padding = '10px';
+            qrImg.style.borderRadius = '15px';
+            qrImg.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
+            
+            // Handle successful load
+            qrImg.onload = function() {
+                console.log('Heart-styled QR image loaded successfully');
+                
+                // Reset button state
+                qrBtn.innerHTML = originalText;
+                qrBtn.disabled = false;
+                
+                // Add floating hearts animation
+                addFloatingHearts(heartContainer);
+                
+                // Show QR section
+                document.getElementById('qrSection').style.display = 'block';
+                
+                // Scroll to QR section
+                document.getElementById('qrSection').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            };
+            
+            // Handle error - fallback to regular heart-styled QR
+            qrImg.onerror = function() {
+                console.log('QR API error, using fallback');
+                
+                // Fallback URL 
+                const fallbackUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedUrl}&color=ff0000&bgcolor=ffffff&format=png&ecc=H`;
+                
+                qrImg.src = fallbackUrl;
+                qrImg.style.width = '250px';
+                qrImg.style.height = '250px';
+                
+                qrImg.onload = function() {
+                    qrBtn.innerHTML = originalText;
+                    qrBtn.disabled = false;
+                    
+                    document.getElementById('qrSection').style.display = 'block';
+                    document.getElementById('qrSection').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'nearest' 
+                    });
+                };
+                
+                qrImg.onerror = function() {
+                    console.error('Failed to load QR image');
+                    qrBtn.innerHTML = originalText;
+                    qrBtn.disabled = false;
+                    alert('Không thể tạo QR code. Vui lòng thử lại sau.');
+                };
+            };
+            
+            // Set the QR API URL as source
+            qrImg.src = qrApiUrl;
+            qrImg.alt = 'QR Code Trái Tim';
+            
+            // Add components to heart container
+            heartContainer.appendChild(heartBg);
+            heartContainer.appendChild(qrImg);
+            qrContainer.appendChild(heartContainer);
+        }
+
+        function addFloatingHearts(container) {
+            // Create floating hearts around the QR
+            const floatingHearts = ['💖', '💕', '💝', '💗', '❤️', '💞'];
+            
+            for (let i = 0; i < 8; i++) {
+                const heart = document.createElement('div');
+                heart.textContent = floatingHearts[i % floatingHearts.length];
+                heart.style.position = 'absolute';
+                heart.style.fontSize = '20px';
+                heart.style.color = '#ff69b4';
+                heart.style.zIndex = '15';
+                heart.style.pointerEvents = 'none';
+                
+                // Random positioning around the heart
+                const angle = (360 / 8) * i;
+                const radius = 180;
+                const x = Math.cos(angle * Math.PI / 180) * radius;
+                const y = Math.sin(angle * Math.PI / 180) * radius;
+                
+                heart.style.left = `calc(50% + ${x}px)`;
+                heart.style.top = `calc(50% + ${y}px)`;
+                heart.style.transform = 'translate(-50%, -50%)';
+                heart.style.animation = `floatHeart 3s ease-in-out infinite ${i * 0.3}s`;
+                
+                container.appendChild(heart);
+            }
+        }
+
+        function addHeartDecorationsToImg(qrImg) {
+            // Create a wrapper div for the QR image with heart decorations
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            wrapper.style.display = 'inline-block';
+            
+            // Style the QR image
+            qrImg.style.display = 'block';
+            
+            // Create heart decorations
+            const hearts = ['💖', '💕', '💝', '💗'];
+            const positions = [
+                { top: '-10px', left: '-10px' },
+                { top: '-10px', right: '-10px' },
+                { bottom: '-10px', left: '-10px' },
+                { bottom: '-10px', right: '-10px' }
+            ];
+            
+            positions.forEach((pos, index) => {
+                const heart = document.createElement('div');
+                heart.textContent = hearts[index % hearts.length];
+                heart.style.position = 'absolute';
+                heart.style.fontSize = '24px';
+                heart.style.zIndex = '10';
+                heart.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))';
+                heart.style.animation = `heartPulse 2s ease-in-out infinite ${index * 0.5}s`;
+                
+                Object.assign(heart.style, pos);
+                wrapper.appendChild(heart);
+            });
+            
+            // Replace the img with the wrapper
+            const parent = qrImg.parentNode;
+            wrapper.appendChild(qrImg);
+            parent.appendChild(wrapper);
+        }
+
+        function downloadQR() {
+            const qrImg = document.getElementById('qrImage');
+            
+            if (!qrImg) {
+                alert('QR code chưa được tạo. Vui lòng tạo QR trước.');
+                return;
+            }
+            
+            // Create a canvas to create heart-background QR download
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 400;
+            canvas.height = 400;
+            
+            // Create a new image to ensure it's loaded
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            
+            img.onload = function() {
+                // Fill white background
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw heart-shaped background
+                ctx.fillStyle = '#ff0000';
+                ctx.beginPath();
+                
+                // Draw heart shape using bezier curves (similar to CSS path)
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                
+                // Heart shape coordinates (scaled for 400x400 canvas)
+                ctx.moveTo(centerX, centerY + 50);
+                ctx.bezierCurveTo(centerX - 175, centerY - 100, centerX - 175, centerY - 200, centerX - 75, centerY - 200);
+                ctx.bezierCurveTo(centerX - 25, centerY - 200, centerX, centerY - 162.5, centerX, centerY - 112.5);
+                ctx.bezierCurveTo(centerX, centerY - 162.5, centerX + 25, centerY - 200, centerX + 75, centerY - 200);
+                ctx.bezierCurveTo(centerX + 175, centerY - 200, centerX + 175, centerY - 100, centerX, centerY + 50);
+                ctx.fill();
+                
+                // Draw QR code in center with white background
+                const qrSize = 280;
+                const qrX = (canvas.width - qrSize) / 2;
+                const qrY = (canvas.height - qrSize) / 2;
+                
+                // White background for QR
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(qrX - 10, qrY - 10, qrSize + 20, qrSize + 20);
+                
+                // Draw QR image
+                ctx.drawImage(img, qrX, qrY, qrSize, qrSize);
+                
+                // Add decorative hearts around
+                ctx.fillStyle = '#ff69b4';
+                ctx.font = '24px Arial';
+                ctx.textAlign = 'center';
+                
+                // Add floating hearts around the heart-shaped background
+                const heartPositions = [
+                    {x: 60, y: 60, heart: '💖'},
+                    {x: 340, y: 60, heart: '💕'},
+                    {x: 60, y: 340, heart: '💝'},
+                    {x: 340, y: 340, heart: '💗'},
+                    {x: 200, y: 30, heart: '❤️'},
+                    {x: 200, y: 370, heart: '💞'}
+                ];
+                
+                heartPositions.forEach(pos => {
+                    ctx.fillText(pos.heart, pos.x, pos.y);
+                });
+                
+                // Download the image
+                const link = document.createElement('a');
+                link.download = 'Heart-Background-QR-Code.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show success message
+                const btn = document.querySelector('.btn-download');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-heart"></i> Đã tải QR trái tim!';
+                btn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'linear-gradient(45deg, #ff69b4, #ff1493)';
+                }, 2000);
+            };
+            
+            img.onerror = function() {
+                alert('Không thể tải QR code để download. Vui lòng thử lại.');
+            };
+            
+            img.src = qrImg.src;
+        }
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"96bcc07a8f460978","version":"2025.7.0","r":1,"token":"2e5433131f5a4a9c9be721f57799dc07","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}}}' crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+</body>
+
+</html>

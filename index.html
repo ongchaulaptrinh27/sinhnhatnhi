@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mật khẩu tình iu 💖</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #FFE0B2; /* màu cam pastel */
+      text-align: center;
+      padding: 50px;
+      color: #E65100; /* cam đậm cho chữ */
+    }
+
+    .box {
+      background: #FFF3E0; /* nhạt hơn một chút để nổi lên */
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: inline-block;
+      max-width: 400px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #FFCC80;
+      margin: 12px 0;
+      font-size: 16px;
+      width: 220px;
+      outline: none;
+      background: #FFF8E1;
+      color: #E65100;
+    } 
+
+    input:focus {
+      border-color: #FFB74D;
+      box-shadow: 0 0 6px rgba(230,81,0,0.4);
+    }
+
+    button {
+      padding: 12px 28px;
+      background-color: #E65100;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover {
+      background-color: #BF360C;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Nhập pass đi</h1>
+    <input type="password" id="password" placeholder="Nhập mật khẩu..." />
+    <br />
+    <button onclick="checkPassword()">lét gô</button>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const correctPassword = "snvv";
+      const userInput = document.getElementById("password").value;
+
+      if (userInput === correctPassword) {
+        window.location.href = "index1.html";
+      } else {
+        alert("Sai mật khẩu òi 😢 Thử lại đi nha!");
+      }
+    }
+  </script>
+</body>
+</html>
