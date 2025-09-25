@@ -7,14 +7,14 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #FFE0B2; /* màu cam pastel */
+      background-color: #FFE0B2;
       text-align: center;
       padding: 50px;
-      color: #E65100; /* cam đậm cho chữ */
+      color: #E65100;
     }
 
     .box {
-      background: #FFF3E0; /* nhạt hơn một chút để nổi lên */
+      background: #FFF3E0;
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -25,6 +25,7 @@
     h1 {
       margin-bottom: 20px;
       font-weight: 600;
+      cursor: pointer; /* cho thấy có thể click */
     }
 
     input {
@@ -63,17 +64,49 @@
 </head>
 <body>
   <div class="box">
-    <h1>Nhập pass đi</h1>
+    <h1 id="title">Nhập pass đi</h1>
     <input type="password" id="password" placeholder="Nhập mật khẩu..." />
     <br />
     <button onclick="checkPassword()">lét gô</button>
   </div>
 
   <script>
-    function checkPassword() {
-      const correctPassword = "snvv";
-      const userInput = document.getElementById("password").value;
+    let clickCount = 0;
 
+    // xử lý khi click vào dòng chữ "Nhập pass đi"
+    document.getElementById("title").addEventListener("click", function () {
+      clickCount++;
+      if (clickCount >= 10) {
+        alert("Bạn đã click 10 lần vào chữ 'Nhập pass đi' 🤭, chuyển trang nè...");
+        window.location.href = "index1.html";
+      }
+    });
+
+    function checkPassword() {
+      const correctPassword = "sangdevshop";
+      const userInput = document.getElementById("password").value;
+      const now = new Date();
+
+      // mốc thời gian
+      const startDate = new Date("2025-09-25T00:00:00"); // từ ngày 25/9
+      const unlockTime = new Date("2025-09-26T04:00:00"); // đúng 4h ngày 26/9
+
+      if (now < startDate) {
+        alert("Chưa đủ thời gian để mở khóa 💔");
+        return;
+      }
+
+      if (now >= startDate && now < unlockTime) {
+        // trong ngày 25 và trước 4h ngày 26
+        if (userInput === correctPassword) {
+          alert("Đúng pass rồi đó 💖 nhưng chưa tới giờ mở 😘, chờ nha...");
+        } else {
+          alert("Sai mật khẩu òi 😢 Thử lại đi nha!");
+        }
+        return;
+      }
+
+      // từ 4h ngày 26/9 trở đi
       if (userInput === correctPassword) {
         window.location.href = "index1.html";
       } else {
